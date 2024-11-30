@@ -1,7 +1,9 @@
-import { FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { cssInterop } from "nativewind";
+import { useQuery } from "@tanstack/react-query";
+import { getSeasonNow } from "@/lib/api";
 
 /**
  * This is a workaround for a bug with expo-image to work with tailwindcss
@@ -10,53 +12,42 @@ import { cssInterop } from "nativewind";
  */
 cssInterop(Image, { className: "style" });
 
-const data = [
-  {
-    id: 1,
-    title: "Dandadan",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1584/143719l.jpg",
-    score: 9.5,
-    scored_by: 1000,
-  },
-  {
-    id: 2,
-    title: "Blue Lock vs. U-20 Japan",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1584/144860l.jpg",
-    score: 8.5,
-    scored_by: 2000,
-  },
-  {
-    id: 3,
-    title: "Chi. Chikyuu no Undou ni Tsuite",
-    imageUrl: "https://cdn.myanimelist.net/images/anime/1749/145922l.jpg",
-    score: 9,
-    scored_by: 1200,
-  },
-];
-
 export default function Index() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["now"],
+    queryFn: getSeasonNow,
+  });
+
+  if (!data || isLoading) {
+    return (
+      <View className="m-auto grid">
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1 bg-[#EDEDED]">
       <FlatList
-        data={data}
-        keyExtractor={(item) => item.id.toString()}
+        data={data.data}
+        keyExtractor={(item) => item.mal_id.toString()}
         ListHeaderComponent={() => (
           <Text className="p-2 text-2xl text-[#222C32]">Now: Fall 2024</Text>
         )}
         renderItem={({ item }) => (
-          <View className="h-[150px] w-full flex-row bg-[#222C32]">
+          <View className="h-[150px] w-full flex-row bg-black">
             <Image
-              source={item.imageUrl}
+              source={item.images.jpg.large_image_url}
               className="w-3/4"
               contentFit="cover"
               transition={1000}
             />
 
             <LinearGradient
-              start={{ x: 0.85, y: 0 }}
+              start={{ x: 1, y: 0 }}
               end={{ x: 0, y: 0 }}
               colors={["rgba(0, 0, 0, 1)", "transparent"]}
-              className="absolute inset-0"
+              className="absolute inset-y-0 w-3/4"
             />
             <LinearGradient
               start={{ x: 0, y: 1 }}
