@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { cssInterop } from "nativewind";
 import { useQuery } from "@tanstack/react-query";
 import { getSeasonNow } from "@/lib/api";
+import { getCurrentSeason } from "@/lib/utils";
 
 /**
  * This is a workaround for a bug with expo-image to work with tailwindcss
@@ -32,7 +33,9 @@ export default function Index() {
         data={data.data}
         keyExtractor={(item) => item.mal_id.toString()}
         ListHeaderComponent={() => (
-          <Text className="p-2 text-2xl text-[#222C32]">Now: Fall 2024</Text>
+          <Text className="p-2 text-xl text-[#222C32]">
+            Season: {getCurrentSeason()}
+          </Text>
         )}
         renderItem={({ item }) => (
           <View className="h-[150px] w-full flex-row bg-black">
