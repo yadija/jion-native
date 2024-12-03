@@ -33,7 +33,7 @@ export default function Index() {
         data={data.data}
         keyExtractor={(item) => item.mal_id.toString()}
         ListHeaderComponent={() => (
-          <Text className="p-2 text-xl text-[#222C32]">
+          <Text className="p-2 font-space-mono text-xl text-[#222C32]">
             Season: {getCurrentSeason()}
           </Text>
         )}
@@ -61,21 +61,25 @@ export default function Index() {
 
             <View className="absolute inset-0 flex flex-row">
               <View className="flex w-2/3 justify-end">
-                <Text className="line-clamp-2 p-2.5 font-bold uppercase text-[#EDEDED]">
+                <Text className="line-clamp-2 p-2.5 font-space-mono uppercase text-[#EDEDED]">
                   {item.title}
                 </Text>
               </View>
               <View className="flex w-1/3 items-center justify-center">
-                <Text className="bg-[#225CB3] px-2 py-0.5 font-bold uppercase text-[#EDEDED]">
+                <Text className="bg-[#225CB3] px-2 py-0.5 font-quicksand-semibold uppercase text-[#EDEDED]">
                   Score
                 </Text>
 
                 <View className="flex flex-row items-end">
-                  <Text className="text-3xl text-[#EDEDED]">{item.score}</Text>
-                  <Text className="text-sm text-[#EDEDED] opacity-75">/10</Text>
+                  <Text className="font-quicksand-medium text-3xl text-[#EDEDED]">
+                    {item.score}
+                  </Text>
+                  <Text className="font-quicksand-regular text-sm text-[#EDEDED] opacity-75">
+                    /10
+                  </Text>
                 </View>
 
-                <Text className="text-xs text-[#EDEDED] opacity-75">
+                <Text className="font-quicksand-regular text-xs text-[#EDEDED] opacity-75">
                   {item.scored_by} users
                 </Text>
               </View>
