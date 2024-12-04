@@ -80,7 +80,7 @@ export default function Index() {
                 </View>
 
                 <Text className="font-quicksand-regular text-xs text-[#EDEDED] opacity-75">
-                  {item.scored_by} users
+                  {item.scored_by.toLocaleString()} users
                 </Text>
               </View>
             </View>
