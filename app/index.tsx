@@ -1,4 +1,10 @@
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { cssInterop } from "nativewind";
@@ -14,7 +20,7 @@ import { getCurrentSeason } from "@/lib/utils";
 cssInterop(Image, { className: "style" });
 
 export default function Index() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["now"],
     queryFn: getSeasonNow,
   });
@@ -30,6 +36,9 @@ export default function Index() {
   return (
     <View className="flex-1 bg-[#EDEDED]">
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }
         data={data.data}
         keyExtractor={(item) => item.mal_id.toString()}
         ListHeaderComponent={() => (
